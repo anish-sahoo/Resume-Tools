@@ -5,9 +5,9 @@ import Home from "./pages/Home";
 const App = () => {
   return (
     <>
-    <ThemeProvider dark>
-      <Home />
-    </ThemeProvider>
+      <ThemeProvider dark>
+        <Home />
+      </ThemeProvider>
     </>
   );
 };
