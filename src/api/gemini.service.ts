@@ -5,7 +5,7 @@ import API_KEY from "../../api_key";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // make a new file called api_key.ts and add the following code:
-// const API_KEY = "AIzaSyCjVnVLUoEkAtJ7ZwoVWyoFySLJ-dRHVoA";
+// const API_KEY = "YOUR_API_KEY";
 // export default API_KEY;
 
 async function getGeminiAnswer(text: string) {
