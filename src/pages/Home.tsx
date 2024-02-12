@@ -2,6 +2,7 @@ import { Button, Tabs, Tab, Textarea, Card, Spinner } from "@nextui-org/react";
 import { useState } from "react";
 import getGeminiAnswer from "../api/gemini.service";
 import Markdown from 'react-markdown';
+import copy from 'copy-text-to-clipboard';
 
 const Home = () => {
   const [text, setText] = useState("");
@@ -35,7 +36,7 @@ const Home = () => {
             </Tab>
             <Tab title="Upload">
               {/* <Input type="file" /> */}
-              <p>Will add soon</p>
+              <p>TBA</p>
             </Tab>
           </Tabs>
         </Card>
@@ -55,13 +56,7 @@ const Home = () => {
         >
           Remove Fluff
         </Button>
-        <Button
-          className="self-center mx-2 w-28 m-2"
-          size="lg"
-          onClick={() => handleGetFeedback(2)}
-        >
-          Parse Resume
-        </Button>
+        
         <Button
           className="self-center mx-2 w-28 m-2"
           size="lg"
@@ -70,9 +65,16 @@ const Home = () => {
           Get Feedback
         </Button>
         <Button
+          className="self-center mx-2 m-2"
+          size="lg"
+          onClick={() => handleGetFeedback(2)}
+        >
+          Parse Resume (JSON)
+        </Button>
+        <Button
           className="self-center mx-2 w-28 m-2"
           size="lg"
-          onClick={() => setResponse("")}
+          onClick={() => copy(response)}
         >
           Copy Results
         </Button>
@@ -85,12 +87,23 @@ const Home = () => {
         </Button>
       </div>
       <div className="w-screen">
-        <Card className="mx-4 md:mx-8 lg:mx-24 p-6 my-4">
+        <Card className="mx-4 md:mx-8 lg:mx-24 p-6 my-4 bg-zinc-900">
           <h1 className="text-2xl pb-2">Result:</h1>
-          <Card className="p-4 bg-zinc-800" isBlurred>
-          {loading ? <Spinner /> : <div><Markdown>{response}</Markdown></div>}
+          <Card className="p-4 bg-zinc-800">
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <Spinner size="lg" />
+              </div>
+            ) : (
+              <Markdown>{response}</Markdown>
+            )}
           </Card>
         </Card>
+      </div>
+      <div>
+        <p className="text-center font-mono">
+          Made by <a href="https://asahoo.dev" className="text-blue-400">Anish Sahoo</a> with React.js and NextUI.
+        </p>
       </div>
     </div>
   );
