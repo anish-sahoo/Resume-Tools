@@ -8,18 +8,44 @@ const Home = () => {
   const [text, setText] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [apiKey, setApiKey] = useState("");
 
   const handleGetFeedback = async (index: number) => {
+    if (!apiKey) {
+      setResponse("Please enter your API key.");
+      return;
+    }
+    if (!text) {
+      setResponse("Please paste in your resume.");
+      return;
+    }
     setLoading(true);
-    const res = await getGeminiAnswer(text, index);
+    const res = await getGeminiAnswer(text, index, apiKey);
     setResponse(res);
     setLoading(false);
   };
   return (
     <div className="h-full min-h-screen bg-background-gray px-20 pt-6 flex flex-col items-center">
-      <h1 className="text-white text-center text-3xl mb-10">
+      <h1 className="text-white text-center text-3xl mb-10 font-mono font-bold lg:text-4xl">
         Resume Tools (Powered by Gemini)
       </h1>
+      <h2 className="mb-2">
+        You need an API key to use this tool. You can get one from {<a className="text-blue-500 underline" href="https://ai.google.dev/">https://ai.google.dev/</a>}
+      </h2>
+      <div className="w-screen text-3xl">
+        <Card className="mx-4 md:mx-8 lg:mx-24 p-4 mb-4">
+          <Textarea
+            placeholder="Paste in your Gemini API Key (The website does not store your API key)"
+            label={`API Key (Google Generative AI)`}
+            size="lg"
+            id="apiKey"
+            value={apiKey}
+            minRows={1}
+            maxRows={2}
+            onChange={(e) => setApiKey(e.target.value)}
+          />
+        </Card>
+      </div>
       <div className="w-screen text-3xl">
         <Card className="mx-4 md:mx-8 lg:mx-24 p-4 mb-4">
           <Tabs className="">
@@ -79,11 +105,25 @@ const Home = () => {
           Copy Results
         </Button>
         <Button
-          className="self-center mx-2 w-28 m-2"
+          className="self-center mx-2 w-28 m-2 bg-red-500"
+          size="lg"
+          onClick={() => setText("")}
+        >
+          Clear Resume
+        </Button>
+        <Button
+          className="self-center mx-2 w-28 m-2 bg-red-500"
           size="lg"
           onClick={() => setResponse("")}
         >
-          Clear
+          Clear Results
+        </Button>
+        <Button
+          className="self-center mx-2 w-28 m-2 bg-red-500"
+          size="lg"
+          onClick={() => setApiKey("")}
+        >
+          Clear API Key
         </Button>
       </div>
       <div className="w-screen">

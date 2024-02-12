@@ -1,14 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import API_KEY from "../../api_key";
 
-// Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI(API_KEY);
-
+// If you want to use a local API key, you can use the following code:
 // make a new file called api_key.ts and add the following code:
 // const API_KEY = "YOUR_API_KEY";
 // export default API_KEY;
+// import API_KEY from "./api_key";
 
-async function getGeminiAnswer(text: string, index: number) {
+async function getGeminiAnswer(text: string, index: number, api_key: string) {
+  if(!api_key) {
+    return "Please enter your API key.";
+  }
+  const genAI = new GoogleGenerativeAI(api_key);
   // For text-only input, use the gemini-pro model
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
